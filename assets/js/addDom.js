@@ -1,0 +1,56 @@
+///FUNCION REUTILIZABLE, ME TOCA IMPLEMENTARLA PARA AGREGAR TODOS LOS ELEMENTOS DEL DOM A TRAVES DE ELLA
+//Añadimos los atributos al elemento
+const addAttributes = (element, attrObject) => {
+  for (let attr in attrObject) {
+    if (attrObject.hasOwnProperty(attr)) {
+      element.setAttribute(attr, attrObject[attr]);
+    }
+  }
+};
+
+//Recibimos un elemento y un objeto con atributos y sus hijos
+const createCustomElement = (element, attributes, children) => {
+  let customElement = document.createElement(element);
+  if (children !== undefined)
+    children.forEach((child) => {
+      if (child.nodeType) {
+        if (child.nodeType === 1 || child.nodeType === 11)
+          customElement.appendChild(child);
+      } else {
+        customElement.innerHTML += child;
+      }
+    });
+  addAttributes(customElement, attributes);
+  return customElement;
+};
+
+const ventanaModal = (content) => {
+  const modalContent = createCustomElement(
+      "div",
+      {
+        id: "modal-content",
+        class: "modal-content",
+      },
+      [content]
+    ),
+    modalContainer = createCustomElement(
+      "div",
+      {
+        id: "modal-container",
+        class: "modal-container",
+      },
+      [modalContent]
+    );
+  //Despliega la ventana modal
+  document.body.appendChild(modalContainer);
+
+  const closeModal = () => {
+    document.body.removeChild(modalContainer);
+  };
+  //Añadimos el evento para cerrar la ventana modal
+  modalContainer.addEventListener("click", (e) => {
+    if (e.target.id === "modal-container") {
+      closeModal();
+    }
+  });
+};

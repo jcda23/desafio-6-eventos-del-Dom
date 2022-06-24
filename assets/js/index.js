@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchData();
 });
 items.addEventListener("click", (e) => {
-  addCarrito(e);
+  selectProduct(e);
 });
 
 let data;
@@ -20,14 +20,11 @@ const fetchData = async () => {
   }
 };
 
-const addCarrito = (e) => {
-  console.log(e.target);
-  console.log(e.target.classList.contains("btn-dark"));
-};
-
 const stockProductos = (data) => {
   data.forEach((producto) => {
-    templateCard.querySelector("h5").textContent = "Código: " + producto.id;
+    templateCard.querySelector("h5").textContent =
+      "Producto: " + producto.title;
+    templateCard.querySelector("h6").textContent = "Código: " + producto.id;
     templateCard.querySelector("p").textContent =
       "Precio: " + producto.precio + "$";
     templateCard
@@ -41,62 +38,21 @@ const stockProductos = (data) => {
   items.appendChild(fragment);
 };
 
-//FUNCION REUTILIZABLE, ME TOCA IMPLEMENTARLA PARA AGREGAR TODOS LOS ELEMENTOS DEL DOM A TRAVES DE ELLA
-//Añadimos los atributos al elemento
-const addAttributes = (element, attrObject) => {
-  for (let attr in attrObject) {
-    if (attrObject.hasOwnProperty(attr)) {
-      element.setAttribute(attr, attrObject[attr]);
-    }
-  }
-};
-
-//Recibimos un elemento y un objeto con atributos y sus hijos
-const createCustomElement = (element, attributes, children) => {
-  let customElement = document.createElement(element);
-  if (children !== undefined)
-    children.forEach((child) => {
-      if (child.nodeType) {
-        if (child.nodeType === 1 || child.nodeType === 11)
-          customElement.appendChild(child);
-      } else {
-        customElement.innerHTML += child;
-      }
-    });
-  addAttributes(customElement, attributes);
-  return customElement;
-};
-
-const ventanaModal = (content) => {
-  const modalContent = createCustomElement(
-      "div",
-      {
-        id: "modal-content",
-        class: "modal-content",
-      },
-      [content]
-    ),
-    modalContainer = createCustomElement(
-      "div",
-      {
-        id: "modal-container",
-        class: "modal-container",
-      },
-      [modalContent]
+const selectProduct = (e) => {
+  /*   console.log(e.target);
+  console.log(e.target.classList.contains("btn-dark")); */
+  if (e.target.classList.contains("btn-dark")) {
+    console.log(e.target.parentElement);
+    ventanaModal(
+      `<h1>HAZ AGREGADO</h1> <hr> <h2>${
+        e.target.parentElement.querySelector("h5").textContent
+      } al carrito</h2>`
     );
-  //Despliega la ventana modal
-  document.body.appendChild(modalContainer);
-
-  const closeModal = () => {
-    document.body.removeChild(modalContainer);
-  };
-  //Añadimos el evento para cerrar la ventana modal
-  modalContainer.addEventListener("click", (e) => {
-    if (e.target.id === "modal-container") {
-      closeModal();
-    }
-  });
+  }
+  e.stopPropagation();
 };
+const addCarrito = (product) => {};
+
 async function main() {
   data = await fetchData();
   ventanaModal(`<h1>HOLA BIENVEDIDO A LA TIENDA ONLINE DE MERXIMPORT!!!</h1>`);
