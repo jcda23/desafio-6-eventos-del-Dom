@@ -1,0 +1,62 @@
+[
+  {
+    "precio": 500,
+    "id": 1,
+    "title": "Cafetera",
+    "thumbnailUrl": "../../assets/img/cafetera.jpg"
+  },
+  {
+    "precio": 300,
+    "id": 2,
+    "title": "Combustible",
+    "thumbnailUrl": "../../assets/img/combustible.jpg"
+  },
+  {
+    "precio": 100,
+    "id": 3,
+    "title": "Estufa",
+    "thumbnailUrl": "../../assets/img/estufa-easy-on.jpg"
+  },
+  {
+    "precio": 100,
+    "id": 4,
+    "title": "Estufa a Leña",
+    "thumbnailUrl": "../../assets/img/estufa-express.jpg"
+  },
+  {
+    "precio": 100,
+    "id": 5,
+    "title": "Estufa a Leña",
+    "thumbnailUrl": "../../assets/img/estufa-leña.jpg"
+  },
+  {
+    "precio": 50,
+    "id": 6,
+    "title": "Pipeta",
+    "thumbnailUrl": "../../assets/img/gas-winter.jpg"
+  },
+  {
+    "precio": 100,
+    "id": 7,
+    "title": "Kit de Cubiertos",
+    "thumbnailUrl": "../../assets/img/kit-utensilios.jpg"
+  },
+  {
+    "precio": 200,
+    "id": 5,
+    "title": "Linterna",
+    "thumbnailUrl": "../../assets/img/linterna-micron-steel.jpg"
+  },
+  {
+    "precio": 150,
+    "id": 8,
+    "title": "Termo de Acero",
+    "thumbnailUrl": "../../assets/img/termo-klunken-amarillo.jpg"
+  },
+  {
+    "precio": 100,
+    "id": 9,
+    "title": "Termo Deportivo",
+    "thumbnailUrl": "../../assets/img/termo-sport-negro.jpg"
+  }
+]
