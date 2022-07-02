@@ -24,32 +24,67 @@ const createCustomElement = (element, attributes, children) => {
   return customElement;
 };
 
-const ventanaModal = (content) => {
-  const modalContent = createCustomElement(
+const ventanaModal = (img, title, text, enlace) => {
+  const modalClose = createCustomElement(
       "div",
       {
-        id: "modal-content",
-        class: "modal-content",
+        class: "modal__close",
+        id: "modal__close",
       },
-      [content]
+      [enlace]
+    ),
+    modalParagraph = createCustomElement(
+      "div",
+      {
+        class: "modal__paragraph",
+        id: "modal__paragraph",
+      },
+      [text]
+    ),
+    modalTitle = createCustomElement(
+      "div",
+      {
+        class: "modal__title",
+        id: "modal__title",
+      },
+      [title]
+    ),
+    modalFigure = createCustomElement(
+      "figure",
+      {
+        id: "modal__picture",
+        class: "modal__picture",
+      },
+      [img]
     ),
     modalContainer = createCustomElement(
       "div",
       {
-        id: "modal-container",
-        class: "modal-container",
+        id: "modal__container",
+        class: "modal__container",
       },
-      [modalContent]
+      [modalFigure, modalTitle, modalParagraph, modalClose]
+    ),
+    modal = createCustomElement(
+      "section",
+      {
+        id: "modal",
+        class: "modal",
+      },
+      [modalContainer]
     );
   //Despliega la ventana modal
-  document.body.appendChild(modalContainer);
+  document.body.appendChild(modal);
 
   const closeModal = () => {
-    document.body.removeChild(modalContainer);
+    /*     document.body.removeChild(modal); */
+    document.getElementById("modal").classList.add("is-active");
+    document.getElementById("modal__container").classList.add("is-active");
+    document.getElementById("modal__picture").classList.add("is-active");
   };
   //Añadimos el evento para cerrar la ventana modal
   modalContainer.addEventListener("click", (e) => {
-    if (e.target.id === "modal-container") {
+    if (e.target.id === "modal__container") {
       closeModal();
     }
   });
