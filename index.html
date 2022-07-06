@@ -39,15 +39,14 @@
             <li class="nav-item">
               <a class="nav-link" href="./assets/pages/contacto.html">Contacto</a>
             </li>
-            <li class="nav-item">
-              <div class="dropdown">
-                <button type="button" class="btn btn-info" data-toggle="dropdown">
-                  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span
-                    class="badge badge-pill badge-danger">3</span>
-                </button>
-              </div>
-            </li>
           </ul>
+          <div class="dropdown">
+            <button type="button" class="btn btn-info" id="buy__car" data-toggle="dropdown">
+              <a href="#table">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Car <span id="navbar__car"
+                  class="navbar__car badge badge-pill badge-danger"></span></a>
+            </button>
+          </div>
         </div>
     </nav>
   </header>
@@ -69,27 +68,80 @@
   </section>
   <div class="container">
     <hr>
-    <div class="row" id="items">
+    <div class="row" id="cards">
     </div>
   </div>
-  <template id="template-card">
+  <template id="template__card">
     <div class="col-12 mb-2 col-md-3">
       <div class="card" id="card">
         <div class="card-body">
           <h5 id="title__card" class="title__card">Titulo</h5>
           <h6>Precio</h6>
-          <p>precio</p>
+          <p id="price__card" class="price__card">precio</p>
           <img class="card-img-top" src="" alt="">
-          <button class="btn btn-dark">Comprar<i class="fa fa-shopping-cart btn btn-dark"></i></button>
+          <button class="btn btn-dark btn-buy">Comprar<i class="fa fa-shopping-cart btn btn-dark"></i></button>
         </div>
       </div>
     </div>
   </template>
+
+  <!--   **************ESTE BLOQUE DE CODIGO QUIERO USARLO EN MI PAGE DE CARRITO -->
+
+  <template id="template__footer">
+    <th scope="row" colspan="2">Total productos</th>
+    <td>10</td>
+    <td>
+      <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+        vaciar todo
+      </button>
+    </td>
+    <td class="font-weight-bold">$ <span>5000</span></td>
+  </template>
+
+  <template id="template__car">
+    <tr>
+      <th scope="row">id</th>
+      <td>Café</td>
+      <td>1</td>
+      <td>
+        <button class="btn btn-info btn-sm">
+          +
+        </button>
+        <button class="btn btn-danger btn-sm">
+          -
+        </button>
+      </td>
+      <td>$ <span>500</span></td>
+    </tr>
+  </template>
+
+  <table id="table" class="table table-primary">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col">ID</th>
+        <th scope="col">Item</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Acción</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody id="items"></tbody>
+    <tfoot>
+      <tr id="footer">
+        <th scope="row" colspan="5">Carrito vacío</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!--   *************PERO NO PUDE HACERLO FUNCIONA DESDE OTRO MODULO JS***************** -->
+
+
   <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
   <script src="./assets/js/registro.js"> </script>
   <script src="./assets/js/login.js"> </script>
-  <script src="./assets/js/index.js"> </script>
   <script src="./assets/js/addDom.js"> </script>
+  <script src="./assets/js/index.js" type="module"> </script>
+
 
 </body>
 

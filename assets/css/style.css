@@ -68,3 +68,28 @@ html {
 .hidden {
   display: none;
 }
+
+.table {
+  margin-top: 8rem;
+}
+
+#buy__car .navbar__car {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #240229;
+}
+
+#buy__car a {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #240229;
+}
+
+* a {
+  text-decoration: none;
+}
+
+.table {
+  width: 100%;
+
+}

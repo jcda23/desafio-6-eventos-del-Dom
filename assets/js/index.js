@@ -1,11 +1,17 @@
+const cards = document.getElementById("cards");
 const items = document.getElementById("items");
-const templateCard = document.getElementById("template-card").content;
+const footer = document.getElementById("footer");
+const templateFooter = document.getElementById("template__footer").content;
+const templateCar = document.getElementById("template__car").content;
+const templateCard = document.getElementById("template__card").content;
+const nItemsCar = document.getElementById("buy__car");
 const fragment = document.createDocumentFragment();
+let buyCar = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchData();
 });
-items.addEventListener("click", (e) => {
+cards.addEventListener("click", (e) => {
   selectProduct(e);
 });
 
@@ -22,31 +28,19 @@ const fetchData = async () => {
 
 const stockProductos = (data) => {
   data.forEach((producto) => {
-    templateCard.getElementById("title__card").textContent =
-      "Producto: " + producto.title;
-    templateCard.querySelector("h6").textContent = "Código: " + producto.id;
-    templateCard.querySelector("p").textContent =
-      "Precio: " + producto.precio + "$";
+    templateCard.getElementById("title__card").textContent = producto.title;
+    templateCard.querySelector("h6").textContent = producto.id;
+    templateCard.querySelector("p").textContent = producto.precio;
     templateCard
       .querySelector("img")
       .setAttribute("src", producto.thumbnailUrl);
+    //botones
     templateCard.querySelector(".btn").dataset.id = producto.id;
     const clone = templateCard.cloneNode(true);
     fragment.appendChild(clone);
   });
-  items.appendChild(fragment);
+  cards.appendChild(fragment);
 };
-
-const selectProduct = (e) => {
-  /*   console.log(e.target);
-  console.log(e.target.classList.contains("btn-dark")); */
-  if (e.target.classList.contains("btn-dark")) {
-    console.log(e.target.parentElement);
-  }
-  e.stopPropagation();
-};
-
-const addCarrito = (product) => {};
 
 function searchFilters(input, selector) {
   document.addEventListener("keyup", (e) => {
@@ -60,6 +54,71 @@ function searchFilters(input, selector) {
     }
   });
 }
+
+const selectProduct = (e) => {
+  if (e.target.classList.contains("btn-buy")) {
+    addCarrito(e.target.parentElement);
+  }
+  e.stopPropagation();
+};
+
+export const addCarrito = (object) => {
+  const product = {
+    id: object.querySelector(".btn-buy").dataset.id,
+    title: object.querySelector(".title__card").textContent,
+    precio: object.querySelector(".price__card").textContent,
+    img: object.querySelector(".card-img-top").src,
+    cantidad: 1,
+  };
+  if (buyCar.hasOwnProperty(product.id)) {
+    product.cantidad = buyCar[product.id].cantidad + 1;
+  }
+  //spread operator
+  buyCar[product.id] = { ...product }; //Necesito enviar este valor a otro archivo js "buyCar.js" para poder usarlo como parametro en la funcion que pinta los objetos del carrito en el doom "printCar"
+  printCar();
+};
+
+// Con esta funcion pinto los productos en el carrito
+// pero no he podido hacerla funcionar desde un modulo de js a parte
+const printCar = () => {
+  /*  console.log(buyCar); */
+  items.innerHTML = "";
+  Object.values(buyCar).forEach((product) => {
+    templateCar.querySelector("th").textContent = product.id;
+    //aca quisiera pintar la imagen de cada producto en el carrito pero me genera error
+    //al pasarla por atributo
+
+    /*     templateCar
+      .querySelector("td")[0]
+      .setAttribute("src", product.thumbnailUrl); */
+    templateCar.querySelectorAll("td")[0].textContent = product.title;
+    templateCar.querySelectorAll("td")[1].textContent = product.cantidad;
+    templateCar.querySelector("span").textContent =
+      product.cantidad * product.precio;
+
+    //botones
+    templateCar.querySelector(".btn-info").dataset.id = product.id;
+    templateCar.querySelector(".btn-danger").dataset.id = product.id;
+    const clone = templateCar.cloneNode(true);
+    fragment.appendChild(clone);
+  });
+  items.appendChild(fragment);
+
+  printFooter();
+};
+
+const printFooter = () => {
+  footer.innerHTML = "";
+  if (Object.keys(buyCar).length === 0) {
+    footer.innerHTML = `<th scope="row" colspan="5">Carrito vacío</th>`;
+  }
+  const nCantidad = Object.values(buyCar).reduce(
+    (acc, { cantidad }) => acc + cantidad,
+    0
+  );
+  console.log(nCantidad);
+  nItemsCar.innerHTML = `<a href="#table"><i class="fa fa-shopping-cart" aria-hidden="true"><span class="navbar__car badge badge-pill badge-danger">${nCantidad}</span>`;
+};
 
 async function main() {
   data = await fetchData();
